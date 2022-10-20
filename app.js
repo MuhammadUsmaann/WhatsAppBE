@@ -19,10 +19,10 @@ mongoose.connect(
     });
 app.use(
     '/api',
-    // cors({
-    //     origin: true,
-    //     credentials: true,
-    // }),
+    cors({
+        origin: true,
+        credentials: true,
+    }),
     erpApiRouter
 );
 

@@ -35,7 +35,7 @@ router.get('/createMsg', (req, res) => {
 
 router.get('/', (req, res) => {
     return res.status(200).send({Hello: 'Hello World!'});
-}).
+})
 
 
 router.get('/message', async (req, res) => {

@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const message = require("./messageModel");
+
 router.post('/createMsg', async (req, res) => {
-    const asBody = req.body;
+    const asBody = req.body.entry[0].changes[0].value;
     try {
-
-
         const result = await new message({ message: asBody }).save();
         // Returning successfull response
         return res.status(200).json({
@@ -22,6 +21,9 @@ router.post('/createMsg', async (req, res) => {
         });
     }
 })
+
+
+
 router.get('/createMsg', (req, res) => {
     var challenge = req.query['hub.challenge'];
     if (!challenge) return res.status(302).send({});
@@ -30,9 +32,11 @@ router.get('/createMsg', (req, res) => {
     };
 })
 
+
 router.get('/', (req, res) => {
     return res.status(200).send({Hello: 'Hello World!'});
-})
+}).
+
 
 router.get('/message', async (req, res) => {
     try {

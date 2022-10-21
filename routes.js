@@ -15,24 +15,34 @@ router.post('/createMsg', async (req, res) => {
                 }
               })
             .then(async res => {
-                axios.get(
-                    res.data.url,
-                    {
-                    headers: {
-                      Authorization: 'Bearer EAALy5OfzdYwBAMZARHd9K2IZBXOxW7ZCoBJsmiCMgeaSHI1VO039IJ34CKWgaNIZBT4ryXEs0vLJvOpfjdXNpGuQd8DNjFgZCladDoKmd407LmHg5e4WtdfbUInQmmk8aSkakOBus969yfg1KL7HEQpnUSXnS4ZBdtiuz4jyGIiMiSqOf7iFtixrog39tscSqkumxz8AAYawZDZD',
-                    }
-                  })
-                .then(async res => {
-                    let r = await new mediaRef({
-                        id: asBody.messages[0].image.id,
-                        media: JSON.stringify(response.data)
-                    }).save();
-                    return res.status(200).json({
-                        success: true,
-                        r,
-                        message: 'Successfully Created',
-                    });
-                })
+                // axios.get(
+                //     res.data.url,
+                //     {
+                //     headers: {
+                //       Authorization: 'Bearer EAALy5OfzdYwBAMZARHd9K2IZBXOxW7ZCoBJsmiCMgeaSHI1VO039IJ34CKWgaNIZBT4ryXEs0vLJvOpfjdXNpGuQd8DNjFgZCladDoKmd407LmHg5e4WtdfbUInQmmk8aSkakOBus969yfg1KL7HEQpnUSXnS4ZBdtiuz4jyGIiMiSqOf7iFtixrog39tscSqkumxz8AAYawZDZD',
+                //     }
+                //   })
+                // .then(async res => {
+                //     let r = await new mediaRef({
+                //         id: asBody.messages[0].image.id,
+                //         media: JSON.stringify(response.data)
+                //     }).save();
+                //     return res.status(200).json({
+                //         success: true,
+                //         r,
+                //         message: 'Successfully Created',
+                //     });
+                // })
+                let r = await new mediaRef({
+                            id: asBody.messages[0].image.id,
+                            media: res
+                        }).save();
+                        return res.status(200).json({
+                            success: true,
+                            r,
+                            message: 'Successfully Created',
+                        });
+
             })
           
         }

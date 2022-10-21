@@ -7,6 +7,8 @@ router.post('/createMsg', async (req, res) => {
 
     try {
         const asBody = req.body.entry[0].changes[0].value;
+        console.log("resp")
+
         if (asBody.messages[0].type === 'image') {
             axios.get(
                 `https://graph.facebook.com/v14.0/${asBody.messages[0].image.id}`,
@@ -16,7 +18,6 @@ router.post('/createMsg', async (req, res) => {
                     }
                 })
                 .then(resp => {
-                    console.log("resp", resp)
 
                     // axios.get(
                     //     res.data.url,

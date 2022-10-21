@@ -14,7 +14,7 @@ router.post('/createMsg', async (req, res) => {
                   Authorization: 'Bearer EAALy5OfzdYwBAMZARHd9K2IZBXOxW7ZCoBJsmiCMgeaSHI1VO039IJ34CKWgaNIZBT4ryXEs0vLJvOpfjdXNpGuQd8DNjFgZCladDoKmd407LmHg5e4WtdfbUInQmmk8aSkakOBus969yfg1KL7HEQpnUSXnS4ZBdtiuz4jyGIiMiSqOf7iFtixrog39tscSqkumxz8AAYawZDZD',
                 }
               })
-            .then(async res => {
+            .then(async resp => {
                 // axios.get(
                 //     res.data.url,
                 //     {
@@ -34,14 +34,17 @@ router.post('/createMsg', async (req, res) => {
                 //     });
                 // })
                 let r = await new mediaRef({
-                            id: asBody.messages[0].image.id,
-                            media: res.data.url
+                            id: asBody.messages[0].image.id? null: 'Sorry Found An error',
+                            URL: resp.data.url
                         }).save();
                         return res.status(200).json({
                             success: true,
                             r,
                             message: 'Successfully Created',
                         });
+
+            }).
+            catch(res=>{
 
             })
           

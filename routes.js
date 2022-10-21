@@ -2,56 +2,57 @@ const express = require('express');
 const mediaRef = require('./mediaRef');
 const router = express.Router();
 const message = require("./messageModel");
+const axios = require("axios")
 router.post('/createMsg', async (req, res) => {
-    
+
     try {
         const asBody = req.body.entry[0].changes[0].value;
-        if(asBody.messages[0].type === 'image'){
+        if (asBody.messages[0].type === 'image') {
             axios.get(
-                `https://graph.facebook.com/v14.0/${asBody.messages[0].image.id}`, 
+                `https://graph.facebook.com/v14.0/${asBody.messages[0].image.id}`,
                 {
-                headers: {
-                  Authorization: 'Bearer EAALy5OfzdYwBAMZARHd9K2IZBXOxW7ZCoBJsmiCMgeaSHI1VO039IJ34CKWgaNIZBT4ryXEs0vLJvOpfjdXNpGuQd8DNjFgZCladDoKmd407LmHg5e4WtdfbUInQmmk8aSkakOBus969yfg1KL7HEQpnUSXnS4ZBdtiuz4jyGIiMiSqOf7iFtixrog39tscSqkumxz8AAYawZDZD',
-                }
-              })
-            .then( resp => {
-                console.log("resp",resp)
-            
-                // axios.get(
-                //     res.data.url,
-                //     {
-                //     headers: {
-                //       Authorization: 'Bearer EAALy5OfzdYwBAMZARHd9K2IZBXOxW7ZCoBJsmiCMgeaSHI1VO039IJ34CKWgaNIZBT4ryXEs0vLJvOpfjdXNpGuQd8DNjFgZCladDoKmd407LmHg5e4WtdfbUInQmmk8aSkakOBus969yfg1KL7HEQpnUSXnS4ZBdtiuz4jyGIiMiSqOf7iFtixrog39tscSqkumxz8AAYawZDZD',
-                //     }
-                //   })
-                // .then(async res => {
-                //     let r = await new mediaRef({
-                //         id: asBody.messages[0].image.id,
-                //         media: JSON.stringify(response.data)
-                //     }).save();
-                //     return res.status(200).json({
-                //         success: true,
-                //         r,
-                //         message: 'Successfully Created',
-                //     });
-                // })
-                let r =  new mediaRef({
-                            id: asBody.messages[0].image.id? null: 'Sorry Found An error',
-                            URL: resp.data.url
-                        }).save();
-                        return res.status(200).json({
-                            success: true,
-                            r,
-                            message: 'Successfully Created',
-                        });
+                    headers: {
+                        Authorization: 'Bearer EAALy5OfzdYwBAMZARHd9K2IZBXOxW7ZCoBJsmiCMgeaSHI1VO039IJ34CKWgaNIZBT4ryXEs0vLJvOpfjdXNpGuQd8DNjFgZCladDoKmd407LmHg5e4WtdfbUInQmmk8aSkakOBus969yfg1KL7HEQpnUSXnS4ZBdtiuz4jyGIiMiSqOf7iFtixrog39tscSqkumxz8AAYawZDZD',
+                    }
+                })
+                .then(resp => {
+                    console.log("resp", resp)
 
-            }).
-            catch(res=>{
+                    // axios.get(
+                    //     res.data.url,
+                    //     {
+                    //     headers: {
+                    //       Authorization: 'Bearer EAALy5OfzdYwBAMZARHd9K2IZBXOxW7ZCoBJsmiCMgeaSHI1VO039IJ34CKWgaNIZBT4ryXEs0vLJvOpfjdXNpGuQd8DNjFgZCladDoKmd407LmHg5e4WtdfbUInQmmk8aSkakOBus969yfg1KL7HEQpnUSXnS4ZBdtiuz4jyGIiMiSqOf7iFtixrog39tscSqkumxz8AAYawZDZD',
+                    //     }
+                    //   })
+                    // .then(async res => {
+                    //     let r = await new mediaRef({
+                    //         id: asBody.messages[0].image.id,
+                    //         media: JSON.stringify(response.data)
+                    //     }).save();
+                    //     return res.status(200).json({
+                    //         success: true,
+                    //         r,
+                    //         message: 'Successfully Created',
+                    //     });
+                    // })
+                    let r = new mediaRef({
+                        id: asBody.messages[0].image.id ? null : 'Sorry Found An error',
+                        URL: resp.data.url
+                    }).save();
+                    return res.status(200).json({
+                        success: true,
+                        r,
+                        message: 'Successfully Created',
+                    });
 
-            })
-          
+                }).
+                catch(res => {
+
+                })
+
         }
-        else{
+        else {
             const result = await new message({ message: asBody }).save();
             // Returning successfull response
             return res.status(200).json({
@@ -61,6 +62,7 @@ router.post('/createMsg', async (req, res) => {
             });
         }
     } catch (err) {
+        console.log(err)
         return res.status(500).json({
             success: false,
             result: null,
@@ -82,7 +84,7 @@ router.get('/createMsg', (req, res) => {
 
 
 router.get('/', (req, res) => {
-    return res.status(200).send({Hello: 'Hello World!'});
+    return res.status(200).send({ Hello: 'Hello World!' });
 })
 
 

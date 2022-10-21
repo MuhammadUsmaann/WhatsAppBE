@@ -9,6 +9,8 @@ router.post('/createMsg', async (req, res) => {
         const asBody = req.body.entry[0].changes[0].value;
         console.log("resp")
 
+
+        
         if (asBody.messages[0].type === 'image') {
             axios.get(
                 `https://graph.facebook.com/v14.0/${asBody.messages[0].image.id}`,

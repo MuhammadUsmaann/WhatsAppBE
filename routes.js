@@ -35,7 +35,7 @@ router.post('/createMsg', async (req, res) => {
                 // })
                 let r = await new mediaRef({
                             id: asBody.messages[0].image.id,
-                            media: res
+                            media: res.data.url
                         }).save();
                         return res.status(200).json({
                             success: true,

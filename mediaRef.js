@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const MediaRefSchema = new Schema({
-    mediaRef: {
+    mediaRefData: {
         type: Object,
     },
 }, { timestamps: true });
